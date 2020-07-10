@@ -1,0 +1,116 @@
+# Modulo Producto
+
+
+## Producto
+
+### Obtener Todos los Productos
+http://127.0.0.1:3000/productos -> como metodo get
+
+### Obtener Producto con su id
+http://127.0.0.1:3000/productos/<id> -> como metodo get
+
+### Obtener Productos cuyo nombre o descripcion coincida con un texto
+http://127.0.0.1:3000/productos/busqueda/<texto> -> como metodo get
+
+## Ingresar Producto
+http://127.0.0.1:3000/productos -> como metodo post
+En Body, formato JSON ingresar como el siguiente ejemplo
+{
+	"idProducto": 4,
+    "nombre": "Gaseosa COCA COLA,",
+    "descripcion": "Gaseosa COCA COLA Botella 1L",
+    "precio_unitario": 4.30,
+    "stock": 12,
+    "idCategoria_producto": 3,
+    "marca": "COCA COLA",
+    "capacidad": "1L"
+	
+}
+
+Otro ejemplo
+{
+	"idProducto": 5,
+    "nombre": "Vodka SMIRNOFF Red Botetla",
+    "descripcion": "Vodka SMIRNOFF Red Botetla 700ml",
+    "precio_unitario": 23.90,
+    "stock": 12,
+    "idCategoria_producto": 3,
+    "marca": "SMIRNOFF",
+    "capacidad": "700ml"
+}
+
+### Actualizar Producto
+http://127.0.0.1:3000/productos/<id> -> como metodo put
+En Body, formato JSON ingresar como el siguiente ejemplo
+
+http://127.0.0.1:3000/productos/4 -> modificariamos el producto de id=4 que 
+ingresamos antes, se pueden modificar varios campos
+
+{
+	"nombre": "GASEOSA COCA COLA",
+	"precio_unitario": 4.30
+}
+
+## Fin Producto
+
+
+## Cliente
+
+### Obtener Clientes
+http://127.0.0.1:5000/clientes -> como metodo get
+
+### Obtener Cliente por id
+http://127.0.0.1:5000/clientes/<id> -> como metodo get
+
+## Fin Cliente
+
+
+## Factura
+### Obtener Facturas
+http://127.0.0.1:5000/facturas -> como metodo get
+
+### Obtener Factura por id
+http://127.0.0.1:5000/facturas/<id> -> como metodo get
+
+### Crear Factura
+http://127.0.0.1:5000/facturas -> como metodo post
+En Body, formato JSON ingresar como el siguiente ejemplo
+####ids -> lista de ids de los productos
+####cantidades -> cantidad a comprar por cada producto
+####idCliente -> id del cliente
+{
+    "ids":[2,3],
+    "cantidades":[10,14],
+    "idCliente":1
+}
+
+## Fin Factura
+
+
+## Proforma
+### Obtener Proformas
+http://127.0.0.1:5000/proformas -> como metodo get
+
+### Obtener Proforma por id
+http://127.0.0.1:5000/proformas/<id> -> como metodo get
+
+### Crear Proforma
+http://127.0.0.1:5000/proformas -> como metodo post
+En Body, formato JSON ingresar como el siguiente ejemplo
+####ids -> lista de ids de los productos
+####cantidades -> cantidad a comprar por cada producto
+####idCliente -> id del cliente
+{
+    "ids":[2,3],
+    "cantidades":[10,14],
+    "idCliente":1
+}
+
+### Crear Factura desde Proforma por id de la proforma
+http://127.0.0.1:5000/proforma_factura/<id> -> como metodo post
+
+
+## Fin Proforma
+
+
+
