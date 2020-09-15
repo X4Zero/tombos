@@ -348,6 +348,36 @@ def get_client(id):
     else:
         return jsonify({"mensaje":"cliente no encontrado"})
 
+@app.route('/clientes',methods=['POST'])
+def add_client():
+    if request.method == 'POST':
+        new_client = {
+            "nombres": request.json['nombres'],
+            "apellidos": request.json['apellidos'],
+            "telefono": request.json['telefono'],
+            "email": request.json['email'],
+            "ruc": request.json['ruc'],
+            "direccion": request.json['direccion'],
+            "razon_social": request.json['razon_social']
+        }
+
+        try:
+            cur = mysql.connection.cursor()
+            cur.execute("""INSERT INTO cliente (nombres,apellidos,telefono,email,ruc,direccion,razon_social) VALUES (%s, %s, %s, %s,  %s, %s, %s)""",
+            (new_client['nombres'],
+            new_client['apellidos'],
+            new_client['telefono'],
+            new_client['email'],
+            new_client['ruc'], 
+            new_client['direccion'],
+            new_client['razon_social']))
+        
+            mysql.connection.commit()
+            return jsonify({"mensaje": "Cliente agregado satisfactoriamente"})
+        except Exception as e:
+            print(e)
+            return jsonify({"mensaje": "Algo salió mal"})
+
 # Fin Clientes
 
 if __name__ == '__main__':

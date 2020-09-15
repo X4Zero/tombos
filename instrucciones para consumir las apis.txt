@@ -60,6 +60,19 @@ http://127.0.0.1:5000/clientes -> como metodo get
 ### Obtener Cliente por id
 http://127.0.0.1:5000/clientes/<id> -> como metodo get
 
+### Agregar Cliente
+http://127.0.0.1:5000/clientes -> como metodo post
+
+En Body, formato JSON ingresar como el siguiente ejemplo
+{
+    "nombres":"Luis",
+    "apellidos":"Vargas",
+    "telefono":"6891210",
+    "email":"luisv68@gmail.com",
+    "ruc": "10088906678",
+    "direccion":"av. perú 164",
+    "razon_social":"BODEGA VARGAS S.A."
+}
 ## Fin Cliente
 
 
