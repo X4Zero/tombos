@@ -52,6 +52,20 @@ ingresamos antes, se pueden modificar varios campos
 ## Fin Producto
 
 
+### USUARIO
+http://127.0.0.1:3000/usuario-> como metodo post
+verifica la existencia de usuario
+En Body, formato JSON ingresar como el siguiente ejemplo
+{
+    "user":"sravicha",
+    "password":"sravichax2"
+}
+ejemplo de resultado:
+{
+    "acceso": "si",
+    "mensaje": "usuario encontrado"
+}
+
 ## Cliente
 
 ### Obtener Clientes

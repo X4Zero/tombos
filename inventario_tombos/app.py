@@ -127,5 +127,32 @@ def update_product(id):
             return jsonify({"mensaje": "Algo salió mal"})
 
 
+## SECCIÓN USUARIOS
+
+#verificar existe usuario para login
+@app.route('/usuario',methods=['POST'])
+def verificar_usuario():
+    if request.method == 'POST':
+        usuario = {
+            "user":request.json['user'],
+            "password":request.json['password']
+        }
+        print(usuario)
+
+        try:
+            cur = mysql.connection.cursor()
+            script_select = "SELECT * FROM usuario WHERE user = '{}' AND password = '{}';".format(usuario['user'],usuario['password'])
+            print("script_select: ",script_select)
+            cur.execute(script_select)
+            usuario_encontrado = cur.fetchone()
+
+            if not usuario_encontrado :
+                return jsonify({"mensaje":"usuario no encontrado","acceso":"no"})
+            else:
+                return jsonify({"mensaje": "usuario encontrado","acceso":"si"})
+        except Exception as e:
+            print(e)
+            return jsonify({"mensaje": "Algo salió mal"})
+
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
