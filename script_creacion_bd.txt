@@ -1,0 +1,172 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema tombos
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema tombos
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `tombos` DEFAULT CHARACTER SET utf8mb4 ;
+USE `tombos` ;
+
+-- -----------------------------------------------------
+-- Table `tombos`.`categoria_producto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tombos`.`categoria_producto` (
+  `idCategoria_producto` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idCategoria_producto`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `tombos`.`producto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tombos`.`producto` (
+  `idProducto` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion` VARCHAR(45) NULL DEFAULT NULL,
+  `precio_unitario` DOUBLE NULL DEFAULT NULL,
+  `stock` INT(11) NULL DEFAULT NULL,
+  `idCategoria_producto` INT(11) NULL DEFAULT NULL,
+  `marca` VARCHAR(45) NULL DEFAULT NULL,
+  `capacidad` VARCHAR(10) NULL DEFAULT NULL,
+  PRIMARY KEY (`idProducto`),
+  INDEX `idCategoria_producto` (`idCategoria_producto` ASC) ,
+  CONSTRAINT `producto_ibfk_1`
+    FOREIGN KEY (`idCategoria_producto`)
+    REFERENCES `tombos`.`categoria_producto` (`idCategoria_producto`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `tombos`.`cliente`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tombos`.`cliente` (
+  `idcliente` INT NOT NULL AUTO_INCREMENT,
+  `nombres` VARCHAR(45) NULL,
+  `apellidos` VARCHAR(45) NULL,
+  `telefono` VARCHAR(45) NULL,
+  `email` VARCHAR(45) NULL,
+  `ruc` VARCHAR(11) NULL,
+  `direccion` VARCHAR(80) NULL,
+  `razon_social` VARCHAR(45) NULL,
+  PRIMARY KEY (`idcliente`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tombos`.`factura`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tombos`.`factura` (
+  `idFactura` INT(11) NOT NULL AUTO_INCREMENT,
+  `fecha` DATE NULL,
+  `total` DOUBLE NULL,
+  `cliente_idcliente` INT NOT NULL,
+  PRIMARY KEY (`idFactura`),
+  INDEX `fk_factura_cliente1_idx` (`cliente_idcliente` ASC) ,
+  CONSTRAINT `fk_factura_cliente1`
+    FOREIGN KEY (`cliente_idcliente`)
+    REFERENCES `tombos`.`cliente` (`idcliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `tombos`.`detalle`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tombos`.`detalle` (
+  `Producto_idProducto` INT(11) NOT NULL,
+  `Factura_idFactura` INT(11) NOT NULL,
+  `cantidad` INT(11) NULL DEFAULT NULL,
+  `subtotal` DOUBLE NULL DEFAULT NULL,
+  PRIMARY KEY (`Producto_idProducto`, `Factura_idFactura`),
+  INDEX `fk_Producto_has_Ventas_Ventas1_idx` (`Factura_idFactura` ASC) ,
+  INDEX `fk_Producto_has_Ventas_Producto_idx` (`Producto_idProducto` ASC) ,
+  CONSTRAINT `fk_Producto_has_Ventas_Producto`
+    FOREIGN KEY (`Producto_idProducto`)
+    REFERENCES `tombos`.`producto` (`idProducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Producto_has_Ventas_Ventas1`
+    FOREIGN KEY (`Factura_idFactura`)
+    REFERENCES `tombos`.`factura` (`idFactura`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `tombos`.`usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tombos`.`usuario` (
+  `idUsuario` INT(11) NOT NULL,
+  `nombre` VARCHAR(45) NULL DEFAULT NULL,
+  `user` VARCHAR(45) NULL DEFAULT NULL,
+  `password` VARCHAR(45) NULL DEFAULT NULL,
+  `rol` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`idUsuario`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `tombos`.`proforma`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tombos`.`proforma` (
+  `idproforma` INT NOT NULL AUTO_INCREMENT,
+  `fecha` DATE NULL,
+  `total` DOUBLE NULL,
+  `cliente_idcliente` INT NOT NULL,
+  PRIMARY KEY (`idproforma`),
+  INDEX `fk_proforma_cliente1_idx` (`cliente_idcliente` ASC) ,
+  CONSTRAINT `fk_proforma_cliente1`
+    FOREIGN KEY (`cliente_idcliente`)
+    REFERENCES `tombos`.`cliente` (`idcliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tombos`.`producto_has_proforma`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tombos`.`producto_has_proforma` (
+  `producto_idProducto` INT(11) NOT NULL,
+  `proforma_idproforma` INT NOT NULL,
+  `cantidad` INT NULL,
+  `subtotal` DOUBLE NULL,
+  PRIMARY KEY (`producto_idProducto`, `proforma_idproforma`),
+  INDEX `fk_producto_has_proforma_proforma1_idx` (`proforma_idproforma` ASC) ,
+  INDEX `fk_producto_has_proforma_producto1_idx` (`producto_idProducto` ASC) ,
+  CONSTRAINT `fk_producto_has_proforma_producto1`
+    FOREIGN KEY (`producto_idProducto`)
+    REFERENCES `tombos`.`producto` (`idProducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_producto_has_proforma_proforma1`
+    FOREIGN KEY (`proforma_idproforma`)
+    REFERENCES `tombos`.`proforma` (`idproforma`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

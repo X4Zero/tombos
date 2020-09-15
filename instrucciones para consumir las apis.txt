@@ -16,7 +16,6 @@ http://127.0.0.1:3000/productos/busqueda/<texto> -> como metodo get
 http://127.0.0.1:3000/productos -> como metodo post
 En Body, formato JSON ingresar como el siguiente ejemplo
 {
-	"idProducto": 4,
     "nombre": "Gaseosa COCA COLA,",
     "descripcion": "Gaseosa COCA COLA Botella 1L",
     "precio_unitario": 4.30,
@@ -29,7 +28,6 @@ En Body, formato JSON ingresar como el siguiente ejemplo
 
 Otro ejemplo
 {
-	"idProducto": 5,
     "nombre": "Vodka SMIRNOFF Red Botetla",
     "descripcion": "Vodka SMIRNOFF Red Botetla 700ml",
     "precio_unitario": 23.90,

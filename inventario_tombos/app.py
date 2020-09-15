@@ -65,7 +65,7 @@ def search_products(texto):
 def add_product():
     if request.method == 'POST':
         new_product = {
-            "idProducto": request.json['idProducto'],
+            # "idProducto": request.json['idProducto'],
             "nombre": request.json['nombre'],
             "descripcion": request.json['descripcion'],
             "precio_unitario": request.json['precio_unitario'],
@@ -77,8 +77,8 @@ def add_product():
 
         try:
             cur = mysql.connection.cursor()
-            cur.execute("""INSERT INTO producto (idProducto, nombre, descripcion, precio_unitario, stock, idCategoria_producto, marca, capacidad) VALUES (%s, %s, %s, %s,  %s, %s, %s, %s)""",
-            (new_product['idProducto'], new_product['nombre'], new_product['descripcion'], 
+            cur.execute("""INSERT INTO producto ( nombre, descripcion, precio_unitario, stock, idCategoria_producto, marca, capacidad) VALUES (%s, %s, %s,  %s, %s, %s, %s)""",
+            (new_product['nombre'], new_product['descripcion'], 
             new_product['precio_unitario'], new_product['stock'], new_product['idCategoria_producto'], 
             new_product['marca'], new_product['capacidad']))
         

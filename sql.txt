@@ -2,16 +2,18 @@ use tombos;
 
 select * from categoria_producto;
 select * from producto;
-
+select * from cliente;
 INSERT INTO `categoria_producto` ( `nombre`) VALUES
 ( 'abarrotes'),
 ('piqueos'),
 ('bebidas'),
 ('confiteria');
-INSERT INTO `producto` VALUES
-(1, 'Gaseosa INCA KOLA', 'Gaseosa INCA KOLA Botella 1L', 4.3, 20, 3, 'INCA KOLA', '1L'),
-(2, 'Agua sin Gas CIELO', 'Agua sin Gas CIELO Botella 2.5L', 2.5, 24, 3, 'CIELO', '2.5L'),
-(3, 'Papas PRINGLES Sabor Original', 'Papas PRINGLES Sabor Original Lata 124g', 7.9, 24, 2, 'PRINGLES', '124g');
 
-select * from cliente;
-INSERT INTO cliente VALUES (1, 'Sara', 'Rojas', '4421210','sara.rojas@gmail.com','10071206258','Calle los girasoles 102','Solterito S.A.');
+INSERT INTO producto (nombre, descripcion,precio_unitario,stock,idCategoria_producto,marca,capacidad) VALUES
+( 'Gaseosa INCA KOLA', 'Gaseosa INCA KOLA Botella 1L', 4.3, 20, 3, 'INCA KOLA', '1L'),
+( 'Agua sin Gas CIELO', 'Agua sin Gas CIELO Botella 2.5L', 2.5, 24, 3, 'CIELO', '2.5L'),
+( 'Papas PRINGLES Sabor Original', 'Papas PRINGLES Sabor Original Lata 124g', 7.9, 24, 2, 'PRINGLES', '124g');
+
+INSERT INTO cliente (nombres,apellidos,telefono,email,ruc,direccion,razon_social) VALUES 
+('Sara', 'Rojas', '4421210','sara.rojas@gmail.com','10071206258','Calle los girasoles 102','Solterito S.A.'),
+('Jose', 'Ramos', '4489210','hose.ramos@gmail.com','10081406258','Calle los arenales 101','Oasis S.A.');
